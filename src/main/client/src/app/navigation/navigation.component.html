@@ -1,0 +1,38 @@
+<mat-toolbar color="primary">
+    <div fxFlex="grow">
+      <button fxHide fxShow.xs="true" mat-icon-button (click)="sidenav.toggle()" *ngIf="isAuthenticated()">
+        <mat-icon class="md-24" aria-label="Menu">menu</mat-icon>
+      </button>
+      <span>Playground</span>
+    </div>
+    <div>
+      <span style="font-size: 70%;">{{ username }}</span>
+      <button mat-icon-button (click)="onLogoutClick()" *ngIf="isAuthenticated()">
+        <mat-icon class="md-24" aria-label="Exit">exit_to_app</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+
+  
+  <mat-sidenav-container class="app-container" ngStyle.xs="top: 56px;">
+    <mat-sidenav #sidenav [(mode)]="mode" [(opened)]="opened" 
+      style="box-shadow: 3px 0 6px rgba(0,0,0,.24), inset 0px 5px 6px -2px rgba(0,0,0,.24);">
+      <nav>
+        <div *ngFor="let link of links">
+          <button 
+            mat-button 
+            class="app-nav-button" 
+            [routerLink]="link.link"
+            routerLinkActive="active-link" #rla="routerLinkActive"
+            [color]="rla.isActive ? 'primary' : ''">{{link.label}}</button>
+        </div>
+      </nav>
+    </mat-sidenav>
+  
+    <mat-sidenav-content style="background-color: white; padding: 20px; box-shadow: inset 0 5px 6px -2px rgba(0,0,0,.24);">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  
+  </mat-sidenav-container>
+  
+

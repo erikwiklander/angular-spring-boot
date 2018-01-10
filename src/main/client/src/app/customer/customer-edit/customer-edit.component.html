@@ -1,0 +1,43 @@
+<div class="docs-example-viewer-wrapper mat-elevation-z8" *ngIf="customer">
+  <div class="docs-example-viewer-title">Customer Details</div>
+  <div class="docs-example-viewer-body">
+    
+      <form [formGroup]="customerForm">
+          <div [className]="editMode || createMode ? 'example-container' : 'read-only example-container'">
+            <mat-form-field>
+              <input #input
+                matInput 
+                placeholder="Name"
+                formControlName="name">
+            </mat-form-field>
+        
+            <mat-form-field 
+              class="demo-chip-list">
+              <mat-chip-list #chiplist>
+                <mat-chip 
+                  *ngFor="let assignmentId of assignmentIds"
+                  [removable]="editMode || createMode"
+                  (remove)="removeAssignmentId(assignmentId)">
+                  {{ assignmentId }}
+                  <mat-icon matChipRemove *ngIf="editMode || createMode">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  #assignmentInput
+                  placeholder="Assignment IDs"
+                  [matChipInputFor]=chiplist
+                  matChipInputAddOnBlur="true"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  (matChipInputTokenEnd)="addAssignmentId($event)">
+              </mat-chip-list>
+            </mat-form-field>
+    
+          </div>
+        </form>
+        <button mat-raised-button color="primary" *ngIf="!createMode && !editMode" routerLink="..">BACK</button>
+        <button mat-raised-button color="primary" *ngIf="!editMode && !createMode" (click)="onEditClick()">EDIT</button>
+        <button mat-raised-button color="primary" *ngIf="editMode" (click)="onCancelClick()">CANCEL</button>
+        <button mat-raised-button color="primary" *ngIf="editMode" (click)="onSaveClick()">SAVE</button>
+        <button mat-raised-button color="primary" *ngIf="createMode" routerLink="..">CANCEL</button>
+        <button mat-raised-button color="primary" *ngIf="createMode" (click)="onCreateClick()">REGISTER</button>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.read-only {
+    pointer-events: none;
+    cursor: default;
+}
+  
+.example-container > * {
+    width: 100%;
+}
+
+.demo-chip-list {
+    width: 100%;
+  }
+  

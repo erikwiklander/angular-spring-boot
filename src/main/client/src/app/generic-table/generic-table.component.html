@@ -1,0 +1,53 @@
+<div class="example-container mat-elevation-z8">
+  <mat-toolbar style="color: rgba(0, 0, 0, 0.54)">
+      <div style="padding-right: 40px">
+          {{config.title}}
+      </div>
+          <div fxHide.xs fxFlex="grow" style="font-size: 15px" *ngIf="config.searchVisible">
+              <mat-form-field shouldLabelFloat="false" color="none" class="search" style="width: 100%; max-width: 200px;">
+                  <i matPrefix class="material-icons" style="font-size: 15px">search</i>
+                  <input 
+                  matInput 
+                  type="text" 
+                  [(ngModel)]="searchString" 
+                  shouldLabelFloat="false" 
+                  (ngModelChange)="onSearchChange()" />
+                  <button mat-button 
+                  *ngIf="searchString" 
+                  matSuffix 
+                  mat-icon-button 
+                  aria-label="Clear" 
+                  (click)="searchString=''; onSearchChange()">
+                  <mat-icon>close</mat-icon>
+              </button>
+          </mat-form-field>
+      </div>
+  </mat-toolbar>
+  <mat-progress-bar [mode]="dataSource.isLoadingResults ? 'query' : 'determinate'"></mat-progress-bar>
+  <mat-table #table [dataSource]="dataSource" flex
+    matSort [matSortActive]="config.sortActive" matSortDisableClear matSortDirection="desc">
+ 
+    <ng-container *ngFor="let col of config.columns" [matColumnDef]="col.field">
+        <span *ngIf="col.sort">  
+          <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> {{ col.label }}</mat-header-cell>
+        </span>
+        <span *ngIf="!col.sort">  
+          <mat-header-cell *matHeaderCellDef disableClear="true"> {{ col.label }}</mat-header-cell>
+        </span>
+      <mat-cell *matCellDef="let entity">
+        <span *ngIf="col.type === 'DATE'">{{ entity[col.field] | date: col.dateFormat }}</span>
+        <span *ngIf="col.type === 'LIST'" [innerHTML]="entity[col.field].join(', ') | highlight : searchString"></span>
+        <span *ngIf="col.type === 'NUMBER'">{{ entity[col.field] }}</span>
+        <span *ngIf="!col.type" [innerHTML]="entity[col.field] | highlight : searchString"></span>
+      </mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></mat-row>
+  </mat-table>
+  <mat-paginator [length]="dataSource.resultsLength" [pageSize]="dataSource.pageSize">
+</mat-paginator>
+</div>
+
+<div style="min-height: 100px">
+</div>

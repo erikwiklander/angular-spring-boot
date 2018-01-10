@@ -1,0 +1,43 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body { 
+    margin: 0px;
+    font-family: Roboto,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+}
+
+
+.docs-example-viewer-wrapper {
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    margin: 4px;
+    max-width: 600px;
+}
+
+.spar-example-viewer-wrapper {
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    margin: 4px;
+}
+
+.docs-example-viewer-title {
+    color: rgba(0, 0, 0, 0.54);
+    background: rgba(0, 0, 0, 0.03);
+    padding: 16px 20px;
+    font: 500 20px/32px Roboto,"Helvetica Neue",sans-serif;
+}
+
+.docs-example-viewer-body {
+    padding: 30px;
+}
+  
+/* This is to have input without highlights */ 
+mat-form-field.search .mat-form-field-ripple {
+    background-color: grey !important;
+}
+
+mat-form-field.search .mat-form-field-infix {
+    width: auto;
+}
+
+span.highlight {
+    background-color: yellow
+}

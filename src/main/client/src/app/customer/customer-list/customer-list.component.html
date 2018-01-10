@@ -1,0 +1,73 @@
+<div class="example-container mat-elevation-z8">
+    <mat-toolbar style="color: rgba(0, 0, 0, 0.54)">
+        <div style="padding-right: 40px">
+            Customers
+        </div>
+            <div fxHide.xs fxFlex="grow" style="font-size: 15px">
+                <mat-form-field shouldLabelFloat="false" color="none" class="search" style="width: 100%; max-width: 200px;">
+                    <i matPrefix class="material-icons" style="font-size: 15px">search</i>
+                    <input 
+                    matInput 
+                    type="text" 
+                    [(ngModel)]="searchString" 
+                    shouldLabelFloat="false" 
+                    (ngModelChange)="onSearchChange($event)" />
+                    <button mat-button 
+                    *ngIf="searchString" 
+                    matSuffix 
+                    mat-icon-button 
+                    aria-label="Clear" 
+                    (click)="searchString=''; onSearchChange('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <div fxShow.xs fxFlex="grow"></div>
+        <div>
+            <button 
+            mat-button 
+            color="primary"
+            style="margin: 10px"
+            routerLink="reg">REGISTER NEW CUSTOMER</button>
+        </div>
+    </mat-toolbar>
+    <mat-progress-bar [mode]="dataSource.isLoadingResults ? 'query' : 'determinate'"></mat-progress-bar>
+    <mat-table #table [dataSource]="dataSource" flex
+    matSort matSortActive="lastModifiedDate" matSortDisableClear matSortDirection="desc">
+  
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+   
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> Name </mat-header-cell>
+        <mat-cell 
+            *matCellDef="let customer" 
+            [innerHTML]="customer.name | highlight : searchString"></mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="assignments">
+            <mat-header-cell *matHeaderCellDef> Assignments </mat-header-cell>
+            <mat-cell *matCellDef="let customer"
+            [innerHTML]="customer.assignmentIds.join(', ') | highlight : searchString"></mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="createdDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> Created Date </mat-header-cell>
+          <mat-cell *matCellDef="let customer"> {{customer.createdDate | date: 'yyyy-MM-dd'}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="lastModifiedDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> Last Modified Date </mat-header-cell>
+          <mat-cell *matCellDef="let customer"> {{customer.lastModifiedDate | date: 'yyyy-MM-dd'}} </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="dataSource.resultsLength" [pageSize]="dataSource.pageSize">
+  </mat-paginator>
+  </div>
+
+  <div style="min-height: 100px">
+  </div>

@@ -1,0 +1,25 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+  }
+
+.mat-table {
+    overflow: auto;
+}
+
+mat-row {
+    cursor: pointer;
+}
+
+mat-row:hover {
+    background-color: #e8eaf6;
+}
+
+.mat-form-field-ripple {
+    background-color: grey !important;
+}
+
+mat-form-field span {
+    background-color: grey !important;
+}

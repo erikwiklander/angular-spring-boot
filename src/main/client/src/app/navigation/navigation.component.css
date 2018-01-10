@@ -1,0 +1,15 @@
+.app-container {
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.app-nav-button {
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid lightgrey;
+    font-weight: normal;
+    line-height: 48px;
+}
