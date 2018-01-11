@@ -5,9 +5,10 @@ import { LoginComponent } from './login/login.component';
 import { CustomerListComponent } from './customer/customer-list/customer-list.component';
 import { CustomerEditComponent } from './customer/customer-edit/customer-edit.component';
 import { GenericTableComponent } from './generic-table/generic-table.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/customer', pathMatch: 'full' },
+  { path: '', component: WelcomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'customer', component: CustomerListComponent, canActivate: [AuthGuard] },
   { path: 'customer/:id', component: CustomerEditComponent, canActivate: [AuthGuard] },

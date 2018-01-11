@@ -28,6 +28,7 @@ import { CustomerEditComponent } from './customer/customer-edit/customer-edit.co
 import { CustomerService } from './customer/customer.service';
 import { HighlightPipe } from './highlight.pipe';
 import { GenericTableComponent } from './generic-table/generic-table.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { GenericTableComponent } from './generic-table/generic-table.component';
     LoginComponent,
     CustomerEditComponent,
     HighlightPipe,
-    GenericTableComponent
+    GenericTableComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
