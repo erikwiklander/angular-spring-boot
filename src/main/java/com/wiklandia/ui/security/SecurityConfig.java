@@ -1,29 +1,40 @@
 package com.wiklandia.ui.security;
 
 import org.springframework.boot.autoconfigure.security.Http401AuthenticationEntryPoint;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import lombok.AllArgsConstructor;
+
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+	private final SecurityProperties securityProperties;
 
-        http.authorizeRequests().antMatchers("/api/**").authenticated();
-        http.authorizeRequests().antMatchers("/**").permitAll();
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable();
+		http.authorizeRequests().antMatchers("/api/**").authenticated();
+		http.authorizeRequests().antMatchers("/**").permitAll();
 
-        http.logout().logoutSuccessUrl("/logoutSuccess");
+		http.csrf().disable();
 
-        http.httpBasic().authenticationEntryPoint(new Http401AuthenticationEntryPoint("UC"));
-        http.formLogin().disable();
-    }
+		http.logout().logoutSuccessUrl("/logoutSuccess");
+
+		http.httpBasic().authenticationEntryPoint(new Http401AuthenticationEntryPoint("Wiklandia"));
+		http.formLogin().disable();
+
+		if (securityProperties.isRequireSsl()) {
+			http.requiresChannel().anyRequest().requiresSecure();
+		}
+
+	}
 
 }
