@@ -96,10 +96,14 @@ export class EntityDataSource extends DataSource<any> {
       .startWith(null)
       .switchMap(() => {
         this.isLoadingResults = true;
+
+        // a bit ugly hard coding
+        const sort = this.sort.active === 'companyName' ? 'company.name' : this.sort.active;
+
         const params = {
           size: '' + this.paginator.pageSize,
           page: '' + this.paginator.pageIndex,
-          sort: this.sort.active + ',' + this.sort.direction,
+          sort: sort + ',' + this.sort.direction,
           q: this.queryString
         };
         return this.http.get<PagedEntity>(this.config.url, { params: params });

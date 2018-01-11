@@ -15,7 +15,7 @@ export const tableConfigs = {
             {
                 field: 'companyName',
                 label: 'Company',
-                sort: false
+                sort: true
             },
             {
                 field: 'createdDate',
