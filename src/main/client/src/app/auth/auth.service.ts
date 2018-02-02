@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   public logout() {
-    this.http.get('/logout').subscribe(() => this.clearUser());
+    this.http.post('/logout', '').subscribe(() => this.clearUser());
   }
 
   public clearUser() {
