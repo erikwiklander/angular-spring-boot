@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.wiklandia.ui.controller.InvalidValuesException;
 import com.wiklandia.ui.model.Assignment;
 import com.wiklandia.ui.model.AssignmentRepository;
 import com.wiklandia.ui.model.Customer;
@@ -46,11 +45,8 @@ public class CustomerService {
 			if (!oldCustomer.getAssignmentIds().contains(assignmentId)) {
 
 				// first check to see if this assignments exists
-				Assignment assignment = assignmentRepo.findOne(QAssignment.assignment.assignmentId.eq(assignmentId));
-				if (assignment == null) {
-					assignment = new Assignment();
-					assignment.setAssignmentId(assignmentId);
-				}
+				Assignment assignment = assignmentRepo.findOne(QAssignment.assignment.assignmentId.eq(assignmentId))
+						.orElse(Assignment.of(assignmentId));
 				assignment.setCustomer(oldCustomer);
 				assignmentRepo.save(assignment);
 				oldCustomer.setLastModifiedDate(new Date());
@@ -69,11 +65,8 @@ public class CustomerService {
 		for (String assignmentId : newCustomer.getNewAssignmentIds()) {
 
 			// first check to see if this assignments exists
-			Assignment assignment = assignmentRepo.findOne(QAssignment.assignment.assignmentId.eq(assignmentId));
-			if (assignment == null) {
-				assignment = new Assignment();
-				assignment.setAssignmentId(assignmentId);
-			}
+			Assignment assignment = assignmentRepo.findOne(QAssignment.assignment.assignmentId.eq(assignmentId))
+					.orElse(Assignment.of(assignmentId));
 			assignment.setCustomer(newCustomer);
 			assignmentRepo.save(assignment);
 		}
@@ -84,16 +77,20 @@ public class CustomerService {
 
 	public void validate(List<String> assignmentIds, Customer c) {
 
-		for (String assignmentId : assignmentIds) {
-			Assignment assignment = assignmentRepo.findOne(QAssignment.assignment.assignmentId.eq(assignmentId));
-
-			if ((c.getId() == null && assignment != null) || (assignment != null && assignment.getCustomer() != null
-					&& c.getId() != assignment.getCustomer().getId())) {
-				throw new InvalidValuesException(String.format("Assignment ID %s is taken. Belongs to %s.",
-						assignmentId, assignment.getCustomer().getName()));
-			}
-
-		}
+		// for (String assignmentId : assignmentIds) {
+		// Optional<Assignment> assignment = assignmentRepo
+		// .findOne(QAssignment.assignment.assignmentId.eq(assignmentId));
+		//
+		//
+		// if ((c.getId() == null && assignment != null) || (assignment != null
+		// && assignment.getCustomer() != null
+		// && c.getId() != assignment.getCustomer().getId())) {
+		// throw new InvalidValuesException(String.format("Assignment ID %s is
+		// taken. Belongs to %s.",
+		// assignmentId, assignment.getCustomer().getName()));
+		// }
+		//
+		// }
 
 	}
 

@@ -1,17 +1,19 @@
 package com.wiklandia.ui.security;
 
-import org.springframework.boot.autoconfigure.security.Http401AuthenticationEntryPoint;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.wiklandia.ui.AppProperties;
 
 import lombok.AllArgsConstructor;
 
@@ -21,7 +23,7 @@ import lombok.AllArgsConstructor;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final SecurityProperties securityProperties;
+    private final AppProperties appProperties;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -35,10 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout().logoutSuccessUrl("/logoutSuccess");
 
-        http.httpBasic().authenticationEntryPoint(new Http401AuthenticationEntryPoint("Wiklandia"));
-        http.formLogin().disable();
+        http.httpBasic().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
 
-        if (securityProperties.isRequireSsl()) {
+        if (appProperties.isRequireSsl()) {
             http.requiresChannel().anyRequest().requiresSecure();
         }
 

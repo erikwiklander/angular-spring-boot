@@ -25,6 +25,12 @@ public class Assignment extends BasicEntity {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    public static Assignment of(String assignmentId) {
+        Assignment a = new Assignment();
+        a.setAssignmentId(assignmentId);
+        return a;
+    }
+
     @Override
     public boolean equals(Object o) {
 
