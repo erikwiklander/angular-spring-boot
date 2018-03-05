@@ -15,7 +15,7 @@ public class SortUtil {
 	public static Sort generateSort(List<String> orderStrings) {
 
 		if (orderStrings == null || orderStrings.isEmpty()) {
-			return new Sort(new Order(Direction.ASC, "id"));
+			return Sort.by("id");
 		}
 
 		List<Order> orders = new ArrayList<>();
@@ -37,7 +37,7 @@ public class SortUtil {
 
 		orders.add(new Order(Direction.ASC, "id"));
 
-		return new Sort(orders);
+		return Sort.by(orders);
 	}
 
 }

@@ -30,12 +30,12 @@ public class EmployeeController {
 	private final EmployeeRepository employeeRepo;
 
 	@GetMapping(value = "api/searchEmployee")
-	public HttpEntity<?> search(@RequestParam("q") String query,
+	public HttpEntity<Object> search(@RequestParam("q") String query,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "size", defaultValue = "20") int size,
 			PersistentEntityResourceAssembler entityAssembler, @RequestParam MultiValueMap<String, String> parameters) {
 
-		PageRequest pageRequest = new PageRequest(page, size, SortUtil.generateSort(parameters.get("sort")));
+		PageRequest pageRequest = PageRequest.of(page, size, SortUtil.generateSort(parameters.get("sort")));
 
 		Page<Employee> requests;
 		if (Strings.isNullOrEmpty(query)) {
