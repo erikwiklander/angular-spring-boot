@@ -38,8 +38,6 @@ public class CustomerController {
 	public HttpEntity<Object> createCustomer(@RequestBody Customer newCustomer,
 			PersistentEntityResourceAssembler entityAssembler) {
 
-		customerService.validate(newCustomer.getNewAssignmentIds(), newCustomer);
-
 		Customer c = customerService.create(newCustomer);
 
 		return ResponseEntity.ok(entityAssembler.toFullResource(c));
@@ -49,8 +47,6 @@ public class CustomerController {
 	@PostMapping(value = "api/saveCustomer/{id}")
 	public HttpEntity<Object> saveCustomer(@PathVariable("id") Customer oldCustomer, @RequestBody Customer newCustomer,
 			PersistentEntityResourceAssembler entityAssembler) {
-
-		customerService.validate(newCustomer.getNewAssignmentIds(), oldCustomer);
 
 		Customer c = customerService.save(oldCustomer, newCustomer);
 

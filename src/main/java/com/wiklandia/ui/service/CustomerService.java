@@ -1,7 +1,6 @@
 package com.wiklandia.ui.service;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -72,25 +71,6 @@ public class CustomerService {
 		}
 
 		return c;
-
-	}
-
-	public void validate(List<String> assignmentIds, Customer c) {
-
-		// for (String assignmentId : assignmentIds) {
-		// Optional<Assignment> assignment = assignmentRepo
-		// .findOne(QAssignment.assignment.assignmentId.eq(assignmentId));
-		//
-		//
-		// if ((c.getId() == null && assignment != null) || (assignment != null
-		// && assignment.getCustomer() != null
-		// && c.getId() != assignment.getCustomer().getId())) {
-		// throw new InvalidValuesException(String.format("Assignment ID %s is
-		// taken. Belongs to %s.",
-		// assignmentId, assignment.getCustomer().getName()));
-		// }
-		//
-		// }
 
 	}
 
